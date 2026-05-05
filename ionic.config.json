@@ -1,0 +1,7 @@
+{
+  "name": "arrakex",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}
