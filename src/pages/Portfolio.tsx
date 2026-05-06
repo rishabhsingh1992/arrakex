@@ -1,13 +1,12 @@
 import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonList, IonItem, IonLabel, IonAvatar, IonBadge,
-  IonRefresher, IonRefresherContent, IonButtons,
+  IonRefresher, IonRefresherContent,
 } from '@ionic/react';
 import type { Coin } from '../data/mockCoins';
 import { usePortfolio } from '../hooks/usePortfolio';
 import { useCoins } from '../hooks/useCoins';
 import { useCurrency } from '../hooks/useCurrency';
-import CurrencyToggle from '../components/CurrencyToggle';
 
 interface EnrichedHolding {
   coin: Coin;
@@ -37,9 +36,6 @@ const Portfolio: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Portfolio</IonTitle>
-          <IonButtons slot="end" style={{ paddingRight: 8 }}>
-            <CurrencyToggle />
-          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
