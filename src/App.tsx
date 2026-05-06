@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp, IonRouterOutlet, IonTabs, IonTabBar, IonTabButton,
@@ -26,16 +26,25 @@ import '@ionic/react/css/text-alignment.css';
 import '@ionic/react/css/text-transformation.css';
 import '@ionic/react/css/flex-utils.css';
 import '@ionic/react/css/display.css';
-import '@ionic/react/css/palettes/dark.system.css';
+import '@ionic/react/css/palettes/dark.class.css';
 import './theme/variables.css';
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const [currency, setCurrency] = useState<Currency>('usd');
+  const [darkMode, setDarkMode] = useState(() => window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('ion-palette-dark', darkMode);
+  }, [darkMode]);
+
+  function toggleDarkMode() {
+    setDarkMode(prev => !prev);
+  }
 
   return (
-    <AppContext.Provider value={{ currency, setCurrency }}>
+    <AppContext.Provider value={{ currency, setCurrency, darkMode, toggleDarkMode }}>
       <IonApp>
         <IonReactRouter>
           <IonTabs>
