@@ -1,8 +1,10 @@
 import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonList, IonItem, IonLabel, IonAvatar, IonBadge,
-  IonRefresher, IonRefresherContent,
+  IonRefresher, IonRefresherContent, IonButtons, IonButton, IonIcon,
 } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
+import { receiptOutline } from 'ionicons/icons';
 import type { Coin } from '../data/mockCoins';
 import { usePortfolio } from '../hooks/usePortfolio';
 import { useCoins } from '../hooks/useCoins';
@@ -19,6 +21,7 @@ const Portfolio: React.FC = () => {
   const { holdings } = usePortfolio();
   const { data: coins, refresh } = useCoins();
   const { formatPrice, formatMarketCap } = useCurrency();
+  const history = useHistory();
 
   const enriched: EnrichedHolding[] = holdings
     .map(h => {
@@ -36,6 +39,11 @@ const Portfolio: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Portfolio</IonTitle>
+          <IonButtons slot="end">
+            <IonButton fill="clear" onClick={() => history.push('/transactions')}>
+              <IonIcon slot="icon-only" icon={receiptOutline} />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

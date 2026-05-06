@@ -4,7 +4,7 @@ import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonBackButton, IonButtons, IonSkeletonText, IonBadge,
   IonItem, IonLabel, IonInput, IonButton, IonCard, IonCardContent,
-  IonList, IonListHeader, IonIcon,
+  IonList, IonListHeader, IonIcon, IonToast,
 } from '@ionic/react';
 import { star, starOutline } from 'ionicons/icons';
 import PriceChart from '../components/PriceChart';
@@ -20,6 +20,7 @@ const CoinDetail: React.FC = () => {
   const { getQuantity, upsert } = usePortfolio();
   const { isWatched, toggle: toggleWatch } = useWatchlist();
   const [qty, setQty] = useState<string>('');
+  const [toast, setToast] = useState('');
 
   const quantity = getQuantity(id);
   const isPositive = (coin?.price_change_percentage_24h ?? 0) >= 0;
@@ -30,7 +31,13 @@ const CoinDetail: React.FC = () => {
     if (!isNaN(n) && n >= 0) {
       upsert(id, n);
       setQty('');
+      setToast('Portfolio updated');
     }
+  }
+
+  function handleWatch() {
+    toggleWatch(id);
+    setToast(watched ? 'Removed from Watchlist' : 'Added to Watchlist');
   }
 
   return (
@@ -42,7 +49,7 @@ const CoinDetail: React.FC = () => {
           </IonButtons>
           <IonTitle>{loading ? '…' : coin?.name}</IonTitle>
           <IonButtons slot="end">
-            <IonButton fill="clear" onClick={() => toggleWatch(id)}>
+            <IonButton fill="clear" onClick={handleWatch}>
               <IonIcon slot="icon-only" icon={watched ? star : starOutline} color={watched ? 'warning' : undefined} />
             </IonButton>
           </IonButtons>
@@ -166,6 +173,8 @@ const CoinDetail: React.FC = () => {
             Coin not found.
           </div>
         )}
+
+        <IonToast isOpen={!!toast} message={toast} duration={1800} onDidDismiss={() => setToast('')} position="bottom" />
       </IonContent>
     </IonPage>
   );

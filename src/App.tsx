@@ -5,14 +5,16 @@ import {
   IonIcon, IonLabel, setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { trendingUp, briefcase, search, settings, star } from 'ionicons/icons';
+import { trendingUp, briefcase, star, newspaper, settings } from 'ionicons/icons';
 
 import Home from './pages/Home';
 import CoinDetail from './pages/CoinDetail';
 import Portfolio from './pages/Portfolio';
-import Search from './pages/Search';
-import Settings from './pages/Settings';
 import Watchlist from './pages/Watchlist';
+import News from './pages/News';
+import Settings from './pages/Settings';
+import MarketOverview from './pages/MarketOverview';
+import Transactions from './pages/Transactions';
 
 import { AppContext } from './store/appStore';
 import type { Currency } from './store/appStore';
@@ -54,9 +56,11 @@ const App: React.FC = () => {
               <Route exact path="/home" component={Home} />
               <Route exact path="/coin/:id" component={CoinDetail} />
               <Route exact path="/portfolio" component={Portfolio} />
-              <Route exact path="/search" component={Search} />
               <Route exact path="/watchlist" component={Watchlist} />
+              <Route exact path="/news" component={News} />
               <Route exact path="/settings" component={Settings} />
+              <Route exact path="/market-overview" component={MarketOverview} />
+              <Route exact path="/transactions" component={Transactions} />
               <Route exact path="/">
                 <Redirect to="/home" />
               </Route>
@@ -67,9 +71,9 @@ const App: React.FC = () => {
                 <IonIcon icon={trendingUp} />
                 <IonLabel>Markets</IonLabel>
               </IonTabButton>
-              <IonTabButton tab="search" href="/search">
-                <IonIcon icon={search} />
-                <IonLabel>Search</IonLabel>
+              <IonTabButton tab="news" href="/news">
+                <IonIcon icon={newspaper} />
+                <IonLabel>News</IonLabel>
               </IonTabButton>
               <IonTabButton tab="portfolio" href="/portfolio">
                 <IonIcon icon={briefcase} />
