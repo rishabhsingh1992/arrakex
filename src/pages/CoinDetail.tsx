@@ -4,22 +4,26 @@ import {
   IonContent, IonHeader, IonPage, IonTitle, IonToolbar,
   IonBackButton, IonButtons, IonSkeletonText, IonBadge,
   IonItem, IonLabel, IonInput, IonButton, IonCard, IonCardContent,
-  IonList, IonListHeader,
+  IonList, IonListHeader, IonIcon,
 } from '@ionic/react';
+import { star, starOutline } from 'ionicons/icons';
 import PriceChart from '../components/PriceChart';
 import { useCoinDetail } from '../hooks/useCoinDetail';
 import { useCurrency } from '../hooks/useCurrency';
 import { usePortfolio } from '../hooks/usePortfolio';
+import { useWatchlist } from '../hooks/useWatchlist';
 
 const CoinDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const { data: coin, loading } = useCoinDetail(id);
   const { formatPrice, formatMarketCap } = useCurrency();
   const { getQuantity, upsert } = usePortfolio();
+  const { isWatched, toggle: toggleWatch } = useWatchlist();
   const [qty, setQty] = useState<string>('');
 
   const quantity = getQuantity(id);
   const isPositive = (coin?.price_change_percentage_24h ?? 0) >= 0;
+  const watched = isWatched(id);
 
   function saveHolding() {
     const n = parseFloat(qty);
@@ -37,6 +41,11 @@ const CoinDetail: React.FC = () => {
             <IonBackButton defaultHref="/" />
           </IonButtons>
           <IonTitle>{loading ? '…' : coin?.name}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton fill="clear" onClick={() => toggleWatch(id)}>
+              <IonIcon slot="icon-only" icon={watched ? star : starOutline} color={watched ? 'warning' : undefined} />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>

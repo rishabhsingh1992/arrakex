@@ -5,13 +5,14 @@ import {
   IonIcon, IonLabel, setupIonicReact,
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { trendingUp, briefcase, search, settings } from 'ionicons/icons';
+import { trendingUp, briefcase, search, settings, star } from 'ionicons/icons';
 
 import Home from './pages/Home';
 import CoinDetail from './pages/CoinDetail';
 import Portfolio from './pages/Portfolio';
 import Search from './pages/Search';
 import Settings from './pages/Settings';
+import Watchlist from './pages/Watchlist';
 
 import { AppContext } from './store/appStore';
 import type { Currency } from './store/appStore';
@@ -54,6 +55,7 @@ const App: React.FC = () => {
               <Route exact path="/coin/:id" component={CoinDetail} />
               <Route exact path="/portfolio" component={Portfolio} />
               <Route exact path="/search" component={Search} />
+              <Route exact path="/watchlist" component={Watchlist} />
               <Route exact path="/settings" component={Settings} />
               <Route exact path="/">
                 <Redirect to="/home" />
@@ -72,6 +74,10 @@ const App: React.FC = () => {
               <IonTabButton tab="portfolio" href="/portfolio">
                 <IonIcon icon={briefcase} />
                 <IonLabel>Portfolio</IonLabel>
+              </IonTabButton>
+              <IonTabButton tab="watchlist" href="/watchlist">
+                <IonIcon icon={star} />
+                <IonLabel>Watchlist</IonLabel>
               </IonTabButton>
               <IonTabButton tab="settings" href="/settings">
                 <IonIcon icon={settings} />
