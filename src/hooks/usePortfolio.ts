@@ -1,11 +1,17 @@
 import { useState, useCallback } from 'react';
 import type { PortfolioEntry } from '../data/mockCoins';
+import { mockPortfolio } from '../data/mockPortfolio';
 
 const STORAGE_KEY = 'arrakex_portfolio';
 
 function load(): PortfolioEntry[] {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === null) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockPortfolio));
+      return mockPortfolio;
+    }
+    return JSON.parse(stored);
   } catch {
     return [];
   }

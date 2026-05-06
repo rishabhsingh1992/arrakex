@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { mockTransactions } from '../data/mockPortfolio';
 
 export type TxType = 'buy' | 'sell';
 
@@ -15,7 +16,12 @@ const STORAGE_KEY = 'arrakex_transactions';
 
 function load(): Transaction[] {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === null) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockTransactions));
+      return mockTransactions;
+    }
+    return JSON.parse(stored);
   } catch {
     return [];
   }

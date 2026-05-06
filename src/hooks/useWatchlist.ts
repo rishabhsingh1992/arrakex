@@ -1,10 +1,16 @@
 import { useState, useCallback } from 'react';
+import { mockWatchlist } from '../data/mockPortfolio';
 
 const STORAGE_KEY = 'arrakex_watchlist';
 
 function load(): string[] {
   try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '[]');
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === null) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockWatchlist));
+      return mockWatchlist;
+    }
+    return JSON.parse(stored);
   } catch {
     return [];
   }
